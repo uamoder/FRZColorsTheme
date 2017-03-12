@@ -11,6 +11,10 @@ import UIKit
 
 class Colors {
     
+    private struct Constants {
+        static let defKey = "Current Color Theme"
+    }
+    
     private let themes: [ColorTheme] = {
         [
         ColorTheme(name: "green", baseColor: .green, lightColor: .yellow, darkColor: .green, contrastColor: .white, altColor: .blue, fontName: "arial"),
@@ -18,9 +22,9 @@ class Colors {
         ]
     }()
     
-    private let defKey = "Current Color Theme"
+    
     private lazy var currentTheme: ColorTheme = {
-        if let currentThemeName = UserDefaults.standard.object(forKey: self.defKey) as? String, let theme = self.themeWithName(currentThemeName){
+        if let currentThemeName = UserDefaults.standard.object(forKey: Constants.defKey) as? String, let theme = self.themeWithName(currentThemeName){
             return theme
         } else {
             return self.themes.first!
@@ -29,10 +33,6 @@ class Colors {
     
     // MARK: -
     static let sharedInstance: Colors = Colors()
-    
-    init() {
-
-    }
     
     // MARK: - Public vars
     
@@ -75,7 +75,7 @@ class Colors {
         }
         
         currentTheme = theme
-        UserDefaults.standard.set(theme.name, forKey: defKey)
+        UserDefaults.standard.set(theme.name, forKey: Constants.defKey)
         themeChangedNotification()
         
     }
